@@ -1,0 +1,39 @@
+INSTALLATION (XAMPP / Windows) — version MULTI-ÉCOLES + CALENDRIER SCOLAIRE
+1. Copier le dossier "ecole" dans C:\xampp\htdocs\
+2. Lancer Apache + MySQL dans XAMPP Control Panel
+3. Ouvrir http://localhost/phpmyadmin -> onglet "Importer"
+
+   CAS A - Installation neuve : importer database/ecole.sql (il crée ecole_db tout seul).
+   CAS B - Vous avez déjà une base ecole_db avec des données : NE PAS réimporter ecole.sql.
+           Choisir la base ecole_db -> onglet "SQL" -> coller/importer database/migration_multi_ecole.sql
+           (à exécuter une seule fois ; toutes les données actuelles deviennent l'école n° 1).
+
+4. Ouvrir http://localhost/ecole/
+
+Comptes de démo :
+ super@ecole.tn / super123      (superadmin : crée les écoles et leurs administrateurs)
+ --- École 1 (Abou Kacem Chebbi) ---
+ admin@ecole.tn / admin123      prof@ecole.tn / prof123
+ parent@ecole.tn / parent123    compta@ecole.tn / compta123    eleve@ecole.tn / eleve123
+ --- École 2 (Ibn Khaldoun) ---
+ admin2@ecole2.tn / admin123
+
+MULTI-ÉCOLES
+- Table schools (clé id_ecole) ; toutes les tables métier ont une colonne id_ecole.
+- L'école vient de la connexion (session côté serveur), jamais de l'URL : les lectures sont filtrées
+  par la session, les créations ajoutent automatiquement l'id_ecole de la session.
+- Les listes déroulantes (classe, matière, élève...) ne proposent que les données de l'école connectée,
+  et toute valeur envoyée par le formulaire est revérifiée côté serveur.
+- Pour ajouter une école : se connecter en superadmin -> Écoles -> + Ajouter, puis Comptes -> + Ajouter
+  (rôle Administrateur, choisir l'école).
+
+CALENDRIER SCOLAIRE (menu "Calendrier scolaire")
+- Vue Mois (grille) et vue Semaine (grille horaire façon emploi du temps, avec les cours de la classe en grisé).
+- Affiche : devoirs (automatiquement depuis le module Devoirs) + contrôles, examens, oraux de synthèse,
+  réunions, vacances/jours fériés (module "Échéances", réservé à l'admin et aux enseignants).
+- Filtre par classe. Un parent ne voit que les classes de ses enfants, un élève que sa classe
+  (renseigner "Compte parent" / "Compte élève" dans la fiche de l'élève).
+- Les prochaines échéances apparaissent aussi sur le tableau de bord.
+
+Si le dossier n'est pas "ecole", modifier BASE_URL dans config/config.php.
+Mots de passe en clair : usage LOCAL uniquement.
